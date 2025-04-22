@@ -1,18 +1,21 @@
+FROM node:18-alpine
 
-# 使用官方Node.js镜像作为基础镜像
-FROM node:20-alpine3.20
+WORKDIR /app
 
-# 设置工作目录
-WORKDIR /usr/src/app
+# Copy package files
+COPY package*.json ./
 
-# 复制当前目录内容到工作目录中
-COPY . .
-
-# 安装项目依赖
+# Install dependencies
 RUN npm install
 
-# 暴露端口，默认是3000，如果你的应用使用不同的端口，请相应修改
-EXPOSE 3000
+# Copy application code
+COPY . .
+
+# Build the application
+# RUN npm run build
+
+# Command will be provided by smithery.yaml
+#CMD ["node", "dist/index.js"]
 
 # 定义环境变量，默认为生产环境
 ENV NODE_ENV production
